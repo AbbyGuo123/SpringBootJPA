@@ -1,6 +1,6 @@
 package com.oocl.springBootSqlTest.OneToN.Enity;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -9,18 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Company {
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String companyName;
+    private String employeeName;
 
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "company",fetch = FetchType.LAZY)
-    private List<Employee> employees = new ArrayList<>();
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     public long getId() {
         return id;
@@ -30,12 +32,12 @@ public class Company {
         this.id = id;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public ZonedDateTime getCreateDate() {
@@ -46,11 +48,11 @@ public class Company {
         this.createDate = createDate;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

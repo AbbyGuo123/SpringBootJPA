@@ -1,5 +1,6 @@
-package com.oocl.springBootSqlTest.OneToN;
+package com.oocl.springBootSqlTest.OneToN.Controller;
 
+import com.oocl.springBootSqlTest.OneToN.DTO.CompanyDTO;
 import com.oocl.springBootSqlTest.OneToN.Enity.Company;
 import com.oocl.springBootSqlTest.OneToN.Repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,12 @@ public class CompanyController {
     }
 
     @Transactional
-    @PostMapping(path = "",produces = MediaType.APPLICATION_JSON_VALUE)
-    public void addCompany(@RequestBody Company company){
-        System.out.println("aaaaaaa"+company.getCompanyName());
-        repository.save(company);
+    @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Company save(@RequestBody Company company) {
+        company.getEmployees().stream().forEach(employee -> {
+            employee.setCompany(company);
+        });
+        return  repository.save(company);
     }
 
     @Transactional
@@ -34,14 +37,23 @@ public class CompanyController {
 
     @Transactional
     @GetMapping(path = "/{id}")
-    public Company findCompanyById(@PathVariable Long id){
-        return repository.findById(id).get();
+    public CompanyDTO findCompanyById(@PathVariable Long id){
+        Company company = repository.findById(id).get();
+        return new CompanyDTO(company);
     }
 
     @Transactional
     @PutMapping
     public Company update(@RequestBody Company company){
         return repository.save(company);
+    }
+
+    @Transactional
+    @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Company delete(@PathVariable("id")Long id) {
+        Company one = repository.findById(id).get();
+        repository.delete(one);
+        return one;
     }
 
 }
