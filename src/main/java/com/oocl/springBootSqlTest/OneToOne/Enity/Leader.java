@@ -3,23 +3,20 @@ package com.oocl.springBootSqlTest.OneToOne.Enity;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 
 @Entity
-public class Klass {
+public class Leader {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String klass_name;
+    private String leader_name;
+
 
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
-
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name="leader_id",referencedColumnName="id",nullable=false)
-    private Leader leader;
 
     public Long getId() {
         return id;
@@ -29,12 +26,12 @@ public class Klass {
         this.id = id;
     }
 
-    public String getKlass_name() {
-        return klass_name;
+    public String getLeader_name() {
+        return leader_name;
     }
 
-    public void setKlass_name(String klass_name) {
-        this.klass_name = klass_name;
+    public void setLeader_name(String leader_name) {
+        this.leader_name = leader_name;
     }
 
     public ZonedDateTime getCreateDate() {
@@ -45,12 +42,4 @@ public class Klass {
         this.createDate = createDate;
     }
 
-    public Leader getLeader() {
-        return leader;
-    }
-
-    public void setLeader(Leader leader) {
-        this.leader = leader;
-    }
 }
-
