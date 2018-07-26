@@ -19,7 +19,7 @@ public class Employee {
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;

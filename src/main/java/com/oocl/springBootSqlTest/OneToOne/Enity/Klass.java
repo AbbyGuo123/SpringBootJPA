@@ -1,5 +1,6 @@
 package com.oocl.springBootSqlTest.OneToOne.Enity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Klass {
 
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
+
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="leader_id",referencedColumnName="id",nullable=false)
