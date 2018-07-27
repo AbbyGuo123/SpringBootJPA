@@ -1,5 +1,6 @@
 package com.oocl.springBootSqlTest.OneToOne.Controller;
 
+import com.oocl.springBootSqlTest.OneToOne.DTO.KlassDTO;
 import com.oocl.springBootSqlTest.OneToOne.Enity.Klass;
 import com.oocl.springBootSqlTest.OneToOne.Repository.KlassRepository;
 import org.springframework.http.MediaType;
@@ -32,8 +33,8 @@ public class KlassController {
 
     @Transactional
     @GetMapping("/{id}")
-    public Klass getKlassById(@PathVariable long id){
-        return klassRepository.findById(id).get();
+    public KlassDTO getKlassById(@PathVariable long id){
+        return new KlassDTO(klassRepository.findById(id).get());
     }
 
     @Transactional

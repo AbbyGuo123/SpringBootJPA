@@ -18,7 +18,7 @@ public class Klass {
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
 
-
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="leader_id",referencedColumnName="id",nullable=false)
     private Leader leader;

@@ -36,6 +36,14 @@ public class UserController {
         return userRepository.save(user);
     }
 
+    @PutMapping(path = "" , produces = MediaType.APPLICATION_JSON_VALUE)
+    public User updateUser(@RequestBody User user){
+        if(user.getGroupTS()!=null) {
+            groupRepository.saveAll(user.getGroupTS());
+        }
+        return userRepository.save(user);
+    }
+
     @Transactional
     @DeleteMapping(path = "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     public User deleteUserById (@PathVariable Long id){
@@ -43,4 +51,12 @@ public class UserController {
         userRepository.delete(user);
         return user;
     }
+
+    @GetMapping(path = "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    public User findById(@PathVariable Long id){
+        User user = userRepository.findById(id).get();
+        return user;
+    }
+
+
 }

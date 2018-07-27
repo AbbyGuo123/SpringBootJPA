@@ -14,7 +14,6 @@ public class Leader {
 
     private String leader_name;
 
-
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
 
