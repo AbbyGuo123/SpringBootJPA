@@ -1,6 +1,7 @@
 package com.oocl.springBootSqlTest.NToN.Controller;
 
 import com.oocl.springBootSqlTest.NToN.Enity.User;
+import com.oocl.springBootSqlTest.NToN.Repository.GroupRepository;
 import com.oocl.springBootSqlTest.NToN.Repository.UserRepository;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +14,11 @@ import java.util.List;
 public class UserController {
 
     private UserRepository userRepository;
+    private GroupRepository groupRepository;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, GroupRepository groupRepository) {
         this.userRepository = userRepository;
+        this.groupRepository = groupRepository;
     }
 
     @Transactional
@@ -24,9 +27,12 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @Transactional
+
     @PostMapping(path = "" , produces = MediaType.APPLICATION_JSON_VALUE)
     public User addUser(@RequestBody User user){
+        if(user.getGroupTS()!=null) {
+            groupRepository.saveAll(user.getGroupTS());
+        }
         return userRepository.save(user);
     }
 

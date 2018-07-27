@@ -1,22 +1,32 @@
 package com.oocl.springBootSqlTest.NToN.Enity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class UserGroup {
+public class GroupT {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private Long groupId;
+    private String groupName;
 
-    private Long userId;
+    @ManyToMany(mappedBy = "groupTS")
+    @JsonIgnore
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
@@ -29,20 +39,12 @@ public class UserGroup {
         this.id = id;
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public ZonedDateTime getCreateDate() {
@@ -52,4 +54,5 @@ public class UserGroup {
     public void setCreateDate(ZonedDateTime createDate) {
         this.createDate = createDate;
     }
+
 }

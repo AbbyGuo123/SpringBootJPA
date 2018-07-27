@@ -1,4 +1,4 @@
-CREATE TABLE GroupT
+CREATE TABLE groupT
 (
     id BIGINT auto_increment primary key,
     group_name varchar(20),

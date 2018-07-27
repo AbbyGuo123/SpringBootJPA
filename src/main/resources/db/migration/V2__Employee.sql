@@ -1,4 +1,4 @@
-CREATE TABLE Employee
+CREATE TABLE employee
 (
     id BIGINT auto_increment primary key,
     employee_name varchar(20),

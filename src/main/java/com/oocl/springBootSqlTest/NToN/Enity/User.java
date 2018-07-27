@@ -1,12 +1,12 @@
 package com.oocl.springBootSqlTest.NToN.Enity;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -18,6 +18,11 @@ public class User {
 
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
+
+    @ManyToMany
+    @JoinTable(name = "user_group",joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private List<GroupT> groupTS =new ArrayList<>();;
 
     public long getId() {
         return id;
@@ -41,6 +46,14 @@ public class User {
 
     public void setCreateDate(ZonedDateTime createDate) {
         this.createDate = createDate;
+    }
+
+    public List<GroupT> getGroupTS() {
+        return groupTS;
+    }
+
+    public void setGroupTS(List<GroupT> groupTS) {
+        this.groupTS = groupTS;
     }
 }
 

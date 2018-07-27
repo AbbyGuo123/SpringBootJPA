@@ -1,4 +1,4 @@
-CREATE TABLE User
+CREATE TABLE user
 (
     id BIGINT auto_increment primary key,
     user_name varchar(20),

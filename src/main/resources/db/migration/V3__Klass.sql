@@ -1,4 +1,4 @@
-CREATE TABLE Klass
+CREATE TABLE klass
 (
     id BIGINT auto_increment primary key,
     klass_name varchar(20),

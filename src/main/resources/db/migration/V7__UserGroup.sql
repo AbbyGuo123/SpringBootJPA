@@ -1,7 +1,7 @@
-CREATE TABLE UserGroupT
+CREATE TABLE user_group
 (
     id BIGINT auto_increment primary key,
-    userId BIGINT,
-    GroupId BIGINT,
+    user_id BIGINT,
+    group_id BIGINT,
     create_date TIMESTAMP
 );
