@@ -18,6 +18,11 @@ public class Employee {
 
     private String gender;
 
+    public Employee(String employeeName, String gender) {
+        this.employeeName = employeeName;
+        this.gender = gender;
+    }
+
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
 

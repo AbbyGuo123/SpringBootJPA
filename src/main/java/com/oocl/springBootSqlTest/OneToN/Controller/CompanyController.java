@@ -73,8 +73,7 @@ public class CompanyController {
     @Transactional
     @GetMapping(path = "/page")
     public Page<Company> getEmployeesByPage(int page, int size){
-        Pageable pageable =new PageRequest(page, size);
-        Page<Company> companies = repository.findAll(pageable);
+        Page<Company> companies = repository.findAll(PageRequest.of(page, size));
         return  companies;
     }
 
