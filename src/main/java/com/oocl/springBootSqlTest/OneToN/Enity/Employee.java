@@ -16,6 +16,8 @@ public class Employee {
 
     private String employeeName;
 
+    private String gender;
+
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
 
@@ -54,5 +56,13 @@ public class Employee {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
