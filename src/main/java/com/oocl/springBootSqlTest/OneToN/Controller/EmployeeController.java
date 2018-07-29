@@ -2,6 +2,8 @@ package com.oocl.springBootSqlTest.OneToN.Controller;
 
 import com.oocl.springBootSqlTest.OneToN.Enity.Employee;
 import com.oocl.springBootSqlTest.OneToN.Repository.EmployeeRepository;
+import com.oocl.springBootSqlTest.OneToN.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,55 +18,54 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    private EmployeeRepository repository;
+    private EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository repository) {
-        this.repository = repository;
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @Transactional
     @GetMapping(path = "",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployee (){
-        return repository.findAll();
+        return employeeService.getAllEmployee();
     }
 
     @Transactional
     @PostMapping(path = "",produces = MediaType.APPLICATION_JSON_VALUE)
     public void addEmployee (@RequestBody Employee employee){
-        repository.save(employee);
+        employeeService.addEmployee(employee);
     }
 
     @Transactional
     @PutMapping(path = "",produces = MediaType.APPLICATION_JSON_VALUE)
     public void updateEmployee (@RequestBody Employee employee){
-        repository.save(employee);
+        employeeService.updateEmployee(employee);
     }
 
     @Transactional
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getEmployeeById (@PathVariable Long id){
-        return repository.findById(id).get();
+        return employeeService.getEmployeeById(id);
     }
 
     @Transactional
     @DeleteMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteEmployeeById (@PathVariable Long id){
-        repository.deleteById(id);
+        employeeService.deleteEmployeeById(id);
     }
 
     @Transactional
     @GetMapping(path = "/page")
     public Page<Employee> getEmployeesByPage(int page,int size){
-        Pageable pageable =new PageRequest(page, size);
-        Page<Employee> employees = repository.findAll(pageable);
-        return  employees;
+        return employeeService.getEmployeesByPage(page, size);
     }
 
 
     @Transactional
     @GetMapping(path = "/gender")
     public List<Employee> getEmployeesByGender(String gender){
-        return  repository.findByGender(gender);
+        return  employeeService.getEmployeesByGender(gender);
     }
 
 

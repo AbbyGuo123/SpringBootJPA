@@ -4,6 +4,7 @@ import com.oocl.springBootSqlTest.OneToN.DTO.CompanyDTO;
 import com.oocl.springBootSqlTest.OneToN.DTO.EmployeeDTO;
 import com.oocl.springBootSqlTest.OneToN.Enity.Company;
 import com.oocl.springBootSqlTest.OneToN.Repository.CompanyRepository;
+import com.oocl.springBootSqlTest.OneToN.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,62 +20,54 @@ import java.util.List;
 @RequestMapping("/company")
 public class CompanyController {
 
-    private CompanyRepository repository;
 
-    public CompanyController(CompanyRepository repository) {
-        this.repository = repository;
+    private CompanyService companyService;
+
+    @Autowired
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
     }
 
     @Transactional
     @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public Company save(@RequestBody Company company) {
-        company.getEmployees().stream().forEach(employee -> {
-            employee.setCompany(company);
-        });
-        return  repository.save(company);
+        return companyService.saveCompany(company);
     }
 
     @Transactional
     @GetMapping(path = "")
     public List<Company> getAllCompany(){
-        return repository.findAll();
+        return companyService.getAllCompany();
     }
 
     @Transactional
     @GetMapping(path = "/{id}")
     public CompanyDTO findCompanyById(@PathVariable Long id){
-        Company company = repository.findById(id).get();
-        return new CompanyDTO(company);
+        return companyService.findCompanyById(id);
     }
 
     @Transactional
     @GetMapping(path = "/{id}/employees")
     public List<EmployeeDTO> findEmployeesByCompanyId(@PathVariable Long id)throws Exception{
-        Company company = repository.findById(id).get();
-        List<EmployeeDTO> employeeDTOList = new ArrayList<>();
-        company.getEmployees().stream().forEach(employee ->employeeDTOList.add(new EmployeeDTO(employee)));
-        return employeeDTOList;
+        return companyService.findEmployeesByCompanyId(id);
     }
 
     @Transactional
     @PutMapping
     public Company update(@RequestBody Company company){
-        return repository.save(company);
+        return companyService.updateCompany(company);
     }
 
     @Transactional
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Company delete(@PathVariable("id")Long id) {
-        Company one = repository.findById(id).get();
-        repository.delete(one);
-        return one;
+        return companyService.deleteCompany(id);
     }
 
     @Transactional
     @GetMapping(path = "/page")
     public Page<Company> getEmployeesByPage(int page, int size){
-        Page<Company> companies = repository.findAll(PageRequest.of(page, size));
-        return  companies;
+        return  companyService.getEmployeesByPage(page,size);
     }
 
 }

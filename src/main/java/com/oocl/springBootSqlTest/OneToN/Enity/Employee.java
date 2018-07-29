@@ -23,6 +23,9 @@ public class Employee {
         this.gender = gender;
     }
 
+    public Employee() {
+    }
+
     @CreatedDate
     private ZonedDateTime createDate = ZonedDateTime.now();
 

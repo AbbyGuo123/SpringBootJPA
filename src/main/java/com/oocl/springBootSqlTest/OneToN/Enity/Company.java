@@ -22,6 +22,9 @@ public class Company {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "company",fetch = FetchType.LAZY)
     private List<Employee> employees = new ArrayList<>();
 
+    public Company() {
+    }
+
     public Company(String companyName) {
         this.companyName = companyName;
     }
